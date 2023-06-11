@@ -1,0 +1,20 @@
+{
+  "iosdev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frenchapp-iosdev-92657-authRole",
+      "UnauthRoleArn": "arn:aws:iam::151691833018:role/amplify-frenchapp-iosdev-92657-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::151691833018:role/amplify-frenchapp-iosdev-92657-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frenchapp-iosdev-92657-deployment",
+      "UnauthRoleName": "amplify-frenchapp-iosdev-92657-unauthRole",
+      "StackName": "amplify-frenchapp-iosdev-92657",
+      "StackId": "arn:aws:cloudformation:us-east-1:151691833018:stack/amplify-frenchapp-iosdev-92657/b695d710-f8ac-11ed-b12e-0a36c5c30d45",
+      "AmplifyAppId": "drbanrg2r0vs4"
+    },
+    "categories": {
+      "api": {
+        "amplifyDatasource": {}
+      }
+    }
+  }
+}
