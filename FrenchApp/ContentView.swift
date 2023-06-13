@@ -8,7 +8,8 @@
 import SwiftUI
 import Amplify
 import AVFoundation
-
+import AWSS3StoragePlugin
+import AWSCognitoAuthPlugin
 
 
 struct ContentView: View {
@@ -23,7 +24,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(vm.podcasts, id: \.id) { podcast in
-                    NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
+                    NavigationLink(destination: DialogView(dialog: podcast.dialog)) {
                         Text(podcast.title)
                         Text(podcast.audio)
                     }
@@ -32,11 +33,10 @@ struct ContentView: View {
        }
     }
 }
+
 struct DialogView: View {
     var dialog: [String]
-    var audio: String
     @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
-    
     @State private var tappedIndices: [Int] = []
 
     var body: some View {
@@ -59,16 +59,125 @@ struct DialogView: View {
                     }
                 }
             }
+
+            Button("Upload Data") {
+                Task {
+                    do {
+                        try await uploadData()
+                    } catch {
+                        print("Failed to upload data: \(error)")
+                    }
+                }
+            }
             
-            Button("Play") {
-                audioVM.loadAudio(audioKey: audio)
+            Button("Download Data") {
+                Task {
+                    do {
+                       try await downloadData()
+                    } catch {
+                        print("Failed to download data: \(error)")
+                    }
+                }
             }
         }
-        .onDisappear {
-            audioVM.audioPlayer?.stop()
+    }
+
+    func uploadData() async throws {
+        let dataString = "Example file contents"
+        let data = Data(dataString.utf8)
+        let uploadTask = Amplify.Storage.uploadData(
+            key: "ExampleKey",
+            data: data
+        )
+        for await progress in await uploadTask.progress {
+            print("Upload Progress: \(progress)")
         }
+        let value = try await uploadTask.value
+        print("Upload Completed: \(value)")
+    }
+    
+    func downloadData() async throws {
+        let downloadTask = Amplify.Storage.downloadData(key: "verbeAvoir.mp3")
+        for await progress in await downloadTask.progress {
+            print("Download Progress: \(progress)")
+        }
+        let data = try await downloadTask.value
+        print("Download Completed: \(data)")
+        
     }
 }
+
+
+
+
+
+
+
+        //            Button("Download and Play") {
+        //                Task {
+        //                    do {
+        //                        let downloadTask = Amplify.Storage.downloadData(key: "public/verbeAvoir.mp3")
+        //                        for await progress in await downloadTask.progress {
+        //                            print("Progress: \(progress)")
+        //                        }
+        //                        let data = try await downloadTask.value
+        //                        audioVM.playAudio(data: data)
+        //                    } catch {
+        //                        print("Failed to download audio: \(error)")
+        //                    }
+        //                }
+        //            }
+
+
+
+
+//struct DialogView: View {
+//    var dialog: [String]
+//    //var audio: String
+//    //var music : String
+//    @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
+//
+//    @State private var tappedIndices: [Int] = []
+//
+//    var body: some View {
+//        VStack {
+//            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
+//                let dialogText = dialog[index]
+//                Text(dialogText)
+//                    .foregroundColor(.primary)
+//                    .onTapGesture {
+//                        tappedIndices.append(index)
+//                    }
+//
+//                if tappedIndices.contains(index) {
+//                    let oddIndex = index + 1
+//                    if oddIndex < dialog.count {
+//                        let oddText = dialog[oddIndex]
+//                        Text(oddText)
+//                            .foregroundColor(.white)
+//                            .listRowBackground(Color.gray)
+//                    }
+//                }
+//            }
+//
+//            Button("Play") {
+//                audioVM.loadAudio(audioKey: audio)
+//            }
+//        }
+//        .onDisappear {
+//            audioVM.audioPlayer?.stop()
+//        }
+//
+//    }
+//
+//    func getAudio(){
+//        Amplify.Storage.downloadData(key: "verbeAvoir.mp3") {result in
+//            if case .sucess(let storageResult) = result {
+//                self.music = storageResult.items
+//            }
+//        }
+//    }
+//}
 
 
 

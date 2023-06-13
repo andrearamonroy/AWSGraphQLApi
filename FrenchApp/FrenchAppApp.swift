@@ -12,6 +12,8 @@ import UIKit
 import AWSAPIPlugin
 import AWSCognitoAuthPlugin
 import AWSS3StoragePlugin
+import Authenticator
+
 
 @main
 struct FrenchAppApp: App {
@@ -24,7 +26,19 @@ struct FrenchAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(dataService: ProductionDataService())
+            Authenticator { state in
+                VStack {
+                    Text("Hello, \(state.user.username)")
+                    ContentView(dataService: ProductionDataService())
+                    Button("Sign out") {
+                        Task {
+                            await state.signOut()
+                        }
+                    }
+                }
+                
+            }
+            //ContentView(dataService: ProductionDataService())
         }
     }
 }
