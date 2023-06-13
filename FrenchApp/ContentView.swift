@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Amplify
+import AVFoundation
 
 
 
@@ -22,7 +23,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(vm.podcasts, id: \.id) { podcast in
-                    NavigationLink(destination: DialogView(dialog: podcast.dialog)) {
+                    NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
                         Text(podcast.title)
                         Text(podcast.audio)
                     }
@@ -33,17 +34,13 @@ struct ContentView: View {
 }
 struct DialogView: View {
     var dialog: [String]
-    //var audio: String
-    //let audioPlayer = AudioPlayer()
-   // var audioURL: String
-    //var audioPlayer: AudioPlayerProtocol
-
+    var audio: String
+    @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
+    
     @State private var tappedIndices: [Int] = []
 
     var body: some View {
         VStack {
-           // PodcastView(audioURL: audioURL, audioPlayer: audioPlayer)
-            
             List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
                 let dialogText = dialog[index]
                 Text(dialogText)
@@ -59,12 +56,17 @@ struct DialogView: View {
                         Text(oddText)
                             .foregroundColor(.white)
                             .listRowBackground(Color.gray)
-                            //.background(.indigo)// Apply different color to odd numbers
                     }
                 }
             }
+            
+            Button("Play") {
+                audioVM.loadAudio(audioKey: audio)
+            }
         }
-      
+        .onDisappear {
+            audioVM.audioPlayer?.stop()
+        }
     }
 }
 
@@ -72,6 +74,12 @@ struct DialogView: View {
 
 
 
+    
+    
+    
+    
+    
+    
     
     
     //func createTodo() async {
@@ -215,6 +223,7 @@ struct DialogView: View {
     //      print("Unable to observe mutation events")
     //  }
     //}
+    
     
     
 
