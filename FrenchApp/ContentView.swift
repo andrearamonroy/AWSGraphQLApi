@@ -7,7 +7,9 @@
 
 import SwiftUI
 import Amplify
-
+import AVFoundation
+import AWSS3StoragePlugin
+import AWSCognitoAuthPlugin
 
 
 struct ContentView: View {
@@ -31,19 +33,15 @@ struct ContentView: View {
        }
     }
 }
+
 struct DialogView: View {
     var dialog: [String]
-    //var audio: String
-    //let audioPlayer = AudioPlayer()
-   // var audioURL: String
-    //var audioPlayer: AudioPlayerProtocol
-
+    //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
     @State private var tappedIndices: [Int] = []
-
+    
+    
     var body: some View {
         VStack {
-           // PodcastView(audioURL: audioURL, audioPlayer: audioPlayer)
-            
             List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
                 let dialogText = dialog[index]
                 Text(dialogText)
@@ -51,7 +49,7 @@ struct DialogView: View {
                     .onTapGesture {
                         tappedIndices.append(index)
                     }
-
+                
                 if tappedIndices.contains(index) {
                     let oddIndex = index + 1
                     if oddIndex < dialog.count {
@@ -59,12 +57,10 @@ struct DialogView: View {
                         Text(oddText)
                             .foregroundColor(.white)
                             .listRowBackground(Color.gray)
-                            //.background(.indigo)// Apply different color to odd numbers
                     }
                 }
             }
         }
-      
     }
 }
 
@@ -72,6 +68,87 @@ struct DialogView: View {
 
 
 
+
+
+
+
+
+        //            Button("Download and Play") {
+        //                Task {
+        //                    do {
+        //                        let downloadTask = Amplify.Storage.downloadData(key: "public/verbeAvoir.mp3")
+        //                        for await progress in await downloadTask.progress {
+        //                            print("Progress: \(progress)")
+        //                        }
+        //                        let data = try await downloadTask.value
+        //                        audioVM.playAudio(data: data)
+        //                    } catch {
+        //                        print("Failed to download audio: \(error)")
+        //                    }
+        //                }
+        //            }
+
+
+
+
+//struct DialogView: View {
+//    var dialog: [String]
+//    //var audio: String
+//    //var music : String
+//    @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
+//
+//    @State private var tappedIndices: [Int] = []
+//
+//    var body: some View {
+//        VStack {
+//            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
+//                let dialogText = dialog[index]
+//                Text(dialogText)
+//                    .foregroundColor(.primary)
+//                    .onTapGesture {
+//                        tappedIndices.append(index)
+//                    }
+//
+//                if tappedIndices.contains(index) {
+//                    let oddIndex = index + 1
+//                    if oddIndex < dialog.count {
+//                        let oddText = dialog[oddIndex]
+//                        Text(oddText)
+//                            .foregroundColor(.white)
+//                            .listRowBackground(Color.gray)
+//                    }
+//                }
+//            }
+//
+//            Button("Play") {
+//                audioVM.loadAudio(audioKey: audio)
+//            }
+//        }
+//        .onDisappear {
+//            audioVM.audioPlayer?.stop()
+//        }
+//
+//    }
+//
+//    func getAudio(){
+//        Amplify.Storage.downloadData(key: "verbeAvoir.mp3") {result in
+//            if case .sucess(let storageResult) = result {
+//                self.music = storageResult.items
+//            }
+//        }
+//    }
+//}
+
+
+
+
+
+    
+    
+    
+    
+    
+    
     
     
     //func createTodo() async {
@@ -215,6 +292,7 @@ struct DialogView: View {
     //      print("Unable to observe mutation events")
     //  }
     //}
+    
     
     
 
