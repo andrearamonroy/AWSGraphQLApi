@@ -36,9 +36,10 @@ struct ContentView: View {
 
 struct DialogView: View {
     var dialog: [String]
-    @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
+    //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
     @State private var tappedIndices: [Int] = []
-
+    
+    
     var body: some View {
         VStack {
             List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
@@ -48,7 +49,7 @@ struct DialogView: View {
                     .onTapGesture {
                         tappedIndices.append(index)
                     }
-
+                
                 if tappedIndices.contains(index) {
                     let oddIndex = index + 1
                     if oddIndex < dialog.count {
@@ -59,53 +60,12 @@ struct DialogView: View {
                     }
                 }
             }
-
-            Button("Upload Data") {
-                Task {
-                    do {
-                        try await uploadData()
-                    } catch {
-                        print("Failed to upload data: \(error)")
-                    }
-                }
-            }
-            
-            Button("Download Data") {
-                Task {
-                    do {
-                       try await downloadData()
-                    } catch {
-                        print("Failed to download data: \(error)")
-                    }
-                }
-            }
         }
-    }
-
-    func uploadData() async throws {
-        let dataString = "Example file contents"
-        let data = Data(dataString.utf8)
-        let uploadTask = Amplify.Storage.uploadData(
-            key: "ExampleKey",
-            data: data
-        )
-        for await progress in await uploadTask.progress {
-            print("Upload Progress: \(progress)")
-        }
-        let value = try await uploadTask.value
-        print("Upload Completed: \(value)")
-    }
-    
-    func downloadData() async throws {
-        let downloadTask = Amplify.Storage.downloadData(key: "verbeAvoir.mp3")
-        for await progress in await downloadTask.progress {
-            print("Download Progress: \(progress)")
-        }
-        let data = try await downloadTask.value
-        print("Download Completed: \(data)")
-        
     }
 }
+
+
+
 
 
 
