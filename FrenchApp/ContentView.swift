@@ -174,7 +174,7 @@ struct PodcastView3: View {
         Task {
             do {
                 let url = try await Amplify.Storage.getURL(
-                    key: "verbeAvoir.mp3",
+                    key: "verbeAvoir.mp3", //here is where i change it to audio variable from dynamoDB.
                     options: .init(
                         pluginOptions: AWSStorageGetURLOptions(
                             validateObjectExistence: true
