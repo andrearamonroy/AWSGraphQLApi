@@ -10,6 +10,7 @@ import Amplify
 import AVFoundation
 import AWSS3StoragePlugin
 import AWSCognitoAuthPlugin
+import UIKit
 
 
 struct ContentView: View {
@@ -60,7 +61,10 @@ struct DialogView: View {
                     }
                 }
             }
-            PodcastView2()
+            //PodcastView3()
+        }
+        VStack{
+            PodcastView3()
         }
     }
 }
@@ -125,6 +129,67 @@ struct PodcastView2: View {
         }
     }
 }
+
+
+
+
+class AudioPlayer: NSObject, ObservableObject {
+    private var player: AVPlayer?
+
+    func playAudio(withURL url: URL) {
+        player = AVPlayer(url: url)
+        player?.play()
+    }
+
+    func stopAudio() {
+        player?.pause()
+    }
+}
+
+struct PodcastView3: View {
+    @StateObject private var audioPlayer = AudioPlayer()
+    @State private var audioURL: URL?
+
+    var body: some View {
+        VStack {
+            if let url = audioURL {
+                Text("Audio URL: \(url.absoluteString)")
+                    .padding()
+                Button("Play Audio") {
+                    audioPlayer.playAudio(withURL: url)
+                }
+                Button("Stop Audio") {
+                    audioPlayer.stopAudio()
+                }
+            } else {
+                Text("Audio URL not available")
+            }
+        }
+        .onAppear {
+            getAudioURL()
+        }
+    }
+
+    func getAudioURL() {
+        Task {
+            do {
+                let url = try await Amplify.Storage.getURL(
+                    key: "verbeAvoir.mp3",
+                    options: .init(
+                        pluginOptions: AWSStorageGetURLOptions(
+                            validateObjectExistence: true
+                        )
+                    )
+                )
+                audioURL = url
+            } catch {
+                print("Failed to get the URL: \(error)")
+            }
+        }
+    }
+}
+
+
 
 
 
