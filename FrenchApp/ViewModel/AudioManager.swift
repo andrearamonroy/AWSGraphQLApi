@@ -10,60 +10,73 @@ import AVFoundation
 import Amplify
 import AWSS3StoragePlugin
 import Combine
-//import AWSS3StoragePlugin
 
-class AudioManager {
-    
-    func getAudio(audioKey: String) -> AnyPublisher<Data, StorageError> {
-        
-        let downloadTask = Amplify.Storage.downloadData(key: audioKey)
-            .inProcessPublisher
-            .flatMap { progress -> AnyPublisher<Data, StorageError> in
-                // Handle progress updates if needed
-                print("Progress: \(progress)")
-                
-                // Return a placeholder value or handle progress updates
-                return Empty<Data, StorageError>().eraseToAnyPublisher()
-            }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-        
-        return downloadTask
+
+class AudioPlayer: NSObject, ObservableObject {
+    private var player: AVPlayer?
+
+    func playAudio(withURL url: URL) {
+        player = AVPlayer(url: url)
+        player?.play()
     }
-    
+
+    func stopAudio() {
+        player?.pause()
+    }
 }
 
+class AudioURLManager {
+    func getUrl(audioKey: String) ->   Future<URL, Error> {
+        Future { promise in
+            Task {
+                do {
+                    let url = try await Amplify.Storage.getURL(
+                        key: audioKey, // Replace with your audio variable from DynamoDB
+                        options: .init(
+                            pluginOptions: AWSStorageGetURLOptions(
+                                validateObjectExistence: true
+                            )
+                        )
+                    )
+                    promise(.success(url))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+    
+    }
+       
+}
 
 class AudioVM: ObservableObject {
-    @Published var audioPlayer: AVAudioPlayer?
-    let audioManager: AudioManager
+    @Published var audioURL: URL?
+    var audioURLManager: AudioURLManager
     var cancellables = Set<AnyCancellable>()
     
-    init(audioManager: AudioManager) {
-        self.audioManager = audioManager
+    init(audioURLManager: AudioURLManager) {
+        self.audioURLManager = audioURLManager
     }
     
     func loadAudio(audioKey: String) {
-        audioManager.getAudio(audioKey: audioKey)
-            .sink(
-                receiveCompletion: { completion in
-                    if case let .failure(error) = completion {
-                        print("Failed: \(error.localizedDescription)")
+        audioURLManager.getUrl(audioKey: audioKey)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("Failed to get the URL: \(error)")
                     }
-                },
-                receiveValue: { [weak self] audioData in
-                    self?.playAudio(data: audioData)
                 }
-            )
+            } receiveValue: { url in
+                DispatchQueue.main.async {
+                    self.audioURL = url
+                }
+            }
             .store(in: &cancellables)
     }
-    
-    func playAudio(data: Data) {
-        do {
-            audioPlayer = try AVAudioPlayer(data: data)
-            audioPlayer?.play()
-        } catch {
-            print("Failed to create audio player: \(error.localizedDescription)")
-        }
-    }
 }
+
+

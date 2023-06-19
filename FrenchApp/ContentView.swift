@@ -25,9 +25,9 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(vm.podcasts, id: \.id) { podcast in
-                    NavigationLink(destination: DialogView(dialog: podcast.dialog)) {
+                    NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
                         Text(podcast.title)
-                        Text(podcast.audio)
+                        //Text(podcast.audio)
                     }
                 }
             }
@@ -37,6 +37,7 @@ struct ContentView: View {
 
 struct DialogView: View {
     var dialog: [String]
+    var audio: String
     //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
     @State private var tappedIndices: [Int] = []
     
@@ -64,7 +65,7 @@ struct DialogView: View {
             //PodcastView3()
         }
         VStack{
-            PodcastView3()
+            PodcastView4(audio: audio)
         }
     }
 }
@@ -132,29 +133,15 @@ struct PodcastView2: View {
 
 
 
-
-class AudioPlayer: NSObject, ObservableObject {
-    private var player: AVPlayer?
-
-    func playAudio(withURL url: URL) {
-        player = AVPlayer(url: url)
-        player?.play()
-    }
-
-    func stopAudio() {
-        player?.pause()
-    }
-}
-
 struct PodcastView3: View {
+    var audio : String
     @StateObject private var audioPlayer = AudioPlayer()
     @State private var audioURL: URL?
 
     var body: some View {
         VStack {
             if let url = audioURL {
-                Text("Audio URL: \(url.absoluteString)")
-                    .padding()
+                //Text("Audio URL: \(url.absoluteString)")
                 Button("Play Audio") {
                     audioPlayer.playAudio(withURL: url)
                 }
@@ -189,7 +176,31 @@ struct PodcastView3: View {
     }
 }
 
-
+struct PodcastView4: View {
+    var audio : String
+    @StateObject private var audioPlayer = AudioPlayer()
+    @StateObject private var audioVM = AudioVM(audioURLManager: AudioURLManager())
+    
+    var body: some View {
+        VStack {
+            if let url = audioVM.audioURL {
+               // Text("Audio URL: \(url.absoluteString)")
+                   
+                Button("Play Audio") {
+                    audioPlayer.playAudio(withURL: url)
+                }
+                Button("Stop Audio") {
+                    audioPlayer.stopAudio()
+                }
+            } else {
+                Text("Audio URL not available")
+            }
+        }
+        .onAppear {
+            audioVM.loadAudio(audioKey: audio)
+        }
+    }
+}
 
 
 
