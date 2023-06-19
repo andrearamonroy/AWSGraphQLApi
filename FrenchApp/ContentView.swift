@@ -10,6 +10,7 @@ import Amplify
 import AVFoundation
 import AWSS3StoragePlugin
 import AWSCognitoAuthPlugin
+import UIKit
 
 
 struct ContentView: View {
@@ -60,10 +61,133 @@ struct DialogView: View {
                     }
                 }
             }
+            //PodcastView3()
+        }
+        VStack{
+            PodcastView3()
         }
     }
 }
 
+struct PodcastView: View {
+    var body: some View {
+        VStack {
+            Text("Hello")
+            Button("Upload Data") {
+                Task {
+                    do {
+                        try await uploadData()
+                    } catch {
+                        print("Error: \(error)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func uploadData() async throws {
+        let dataString = "Example file contents"
+        let data = Data(dataString.utf8)
+        let uploadTask = Amplify.Storage.uploadData(
+            key: "ExampleKey2",
+            data: data
+        )
+        for await progress in await uploadTask.progress {
+            print("Progress: \(progress)")
+        }
+        let value = try await uploadTask.value
+        print("Completed: \(value)")
+    }
+}
+
+struct PodcastView2: View {
+    var body: some View {
+        VStack {
+            Text("Hello")
+            Button("Download Data") {
+                Task {
+                    await downloadData()
+                }
+            }
+        }
+    }
+    
+    func downloadData() async {
+        do {
+            let downloadTask = Amplify.Storage.downloadData(key: "ExampleKey2")
+            
+            for await progress in await downloadTask.progress {
+                print("Progress: \(progress)")
+            }
+            
+            let data = try await downloadTask.value
+            print("Completed: \(data)")
+            
+            // Add your logic to handle the downloaded data here
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+}
+
+
+
+
+class AudioPlayer: NSObject, ObservableObject {
+    private var player: AVPlayer?
+
+    func playAudio(withURL url: URL) {
+        player = AVPlayer(url: url)
+        player?.play()
+    }
+
+    func stopAudio() {
+        player?.pause()
+    }
+}
+
+struct PodcastView3: View {
+    @StateObject private var audioPlayer = AudioPlayer()
+    @State private var audioURL: URL?
+
+    var body: some View {
+        VStack {
+            if let url = audioURL {
+                Text("Audio URL: \(url.absoluteString)")
+                    .padding()
+                Button("Play Audio") {
+                    audioPlayer.playAudio(withURL: url)
+                }
+                Button("Stop Audio") {
+                    audioPlayer.stopAudio()
+                }
+            } else {
+                Text("Audio URL not available")
+            }
+        }
+        .onAppear {
+            getAudioURL()
+        }
+    }
+
+    func getAudioURL() {
+        Task {
+            do {
+                let url = try await Amplify.Storage.getURL(
+                    key: "verbeAvoir.mp3", //here is where i change it to audio variable from dynamoDB.
+                    options: .init(
+                        pluginOptions: AWSStorageGetURLOptions(
+                            validateObjectExistence: true
+                        )
+                    )
+                )
+                audioURL = url
+            } catch {
+                print("Failed to get the URL: \(error)")
+            }
+        }
+    }
+}
 
 
 
