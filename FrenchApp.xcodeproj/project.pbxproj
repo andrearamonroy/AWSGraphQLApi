@@ -13,16 +13,17 @@
 		654F3A342A263D6600C405ED /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F3A332A263D6600C405ED /* PlayerView.swift */; };
 		654F3A362A263D7E00C405ED /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F3A352A263D7E00C405ED /* PlayButton.swift */; };
 		656229122A1BEA1F00FBD080 /* PodcastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656229112A1BEA1F00FBD080 /* PodcastViewModel.swift */; };
+		65733E482A4345370049C5C5 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E472A4345370049C5C5 /* AWSAPIPlugin */; };
+		65733E4A2A4345370049C5C5 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E492A4345370049C5C5 /* AWSCognitoAuthPlugin */; };
+		65733E4C2A4345370049C5C5 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E4B2A4345370049C5C5 /* AWSDataStorePlugin */; };
+		65733E4E2A4345370049C5C5 /* AWSPredictionsPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E4D2A4345370049C5C5 /* AWSPredictionsPlugin */; };
+		65733E502A4345370049C5C5 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E4F2A4345370049C5C5 /* AWSS3StoragePlugin */; };
+		65733E522A4345370049C5C5 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E512A4345370049C5C5 /* Amplify */; };
 		657C2DC32A181DD800A9CA01 /* FrenchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C2DC22A181DD800A9CA01 /* FrenchAppApp.swift */; };
 		657C2DC52A181DD800A9CA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C2DC42A181DD800A9CA01 /* ContentView.swift */; };
 		657C2DC72A181DDA00A9CA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 657C2DC62A181DDA00A9CA01 /* Assets.xcassets */; };
 		657C2DCB2A181DDA00A9CA01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 657C2DCA2A181DDA00A9CA01 /* Preview Assets.xcassets */; };
 		65B8543D2A3675C7000DC1BE /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8543C2A3675C7000DC1BE /* AudioManager.swift */; };
-		65B854402A37BD5A000DC1BE /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B8543F2A37BD5A000DC1BE /* AWSAPIPlugin */; };
-		65B854422A37BD5A000DC1BE /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B854412A37BD5A000DC1BE /* AWSCognitoAuthPlugin */; };
-		65B854442A37BD5A000DC1BE /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B854432A37BD5A000DC1BE /* AWSDataStorePlugin */; };
-		65B854462A37BD5A000DC1BE /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B854452A37BD5A000DC1BE /* AWSS3StoragePlugin */; };
-		65B854482A37BD5A000DC1BE /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 65B854472A37BD5A000DC1BE /* Amplify */; };
 		65B8544C2A390925000DC1BE /* CognitoAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8544B2A390925000DC1BE /* CognitoAuthVM.swift */; };
 		65B8544F2A390DC2000DC1BE /* Authenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 65B8544E2A390DC2000DC1BE /* Authenticator */; };
 		CCD96679DD436622A0763B2E /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689CA9B481301F395A695A0 /* Podcast.swift */; };
@@ -53,12 +54,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65B854442A37BD5A000DC1BE /* AWSDataStorePlugin in Frameworks */,
-				65B854482A37BD5A000DC1BE /* Amplify in Frameworks */,
+				65733E4E2A4345370049C5C5 /* AWSPredictionsPlugin in Frameworks */,
+				65733E522A4345370049C5C5 /* Amplify in Frameworks */,
+				65733E482A4345370049C5C5 /* AWSAPIPlugin in Frameworks */,
 				65B8544F2A390DC2000DC1BE /* Authenticator in Frameworks */,
-				65B854402A37BD5A000DC1BE /* AWSAPIPlugin in Frameworks */,
-				65B854422A37BD5A000DC1BE /* AWSCognitoAuthPlugin in Frameworks */,
-				65B854462A37BD5A000DC1BE /* AWSS3StoragePlugin in Frameworks */,
+				65733E4A2A4345370049C5C5 /* AWSCognitoAuthPlugin in Frameworks */,
+				65733E4C2A4345370049C5C5 /* AWSDataStorePlugin in Frameworks */,
+				65733E502A4345370049C5C5 /* AWSS3StoragePlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,12 +170,13 @@
 			);
 			name = FrenchApp;
 			packageProductDependencies = (
-				65B8543F2A37BD5A000DC1BE /* AWSAPIPlugin */,
-				65B854412A37BD5A000DC1BE /* AWSCognitoAuthPlugin */,
-				65B854432A37BD5A000DC1BE /* AWSDataStorePlugin */,
-				65B854452A37BD5A000DC1BE /* AWSS3StoragePlugin */,
-				65B854472A37BD5A000DC1BE /* Amplify */,
 				65B8544E2A390DC2000DC1BE /* Authenticator */,
+				65733E472A4345370049C5C5 /* AWSAPIPlugin */,
+				65733E492A4345370049C5C5 /* AWSCognitoAuthPlugin */,
+				65733E4B2A4345370049C5C5 /* AWSDataStorePlugin */,
+				65733E4D2A4345370049C5C5 /* AWSPredictionsPlugin */,
+				65733E4F2A4345370049C5C5 /* AWSS3StoragePlugin */,
+				65733E512A4345370049C5C5 /* Amplify */,
 			);
 			productName = FrenchApp;
 			productReference = 657C2DBF2A181DD800A9CA01 /* FrenchApp.app */;
@@ -204,8 +207,8 @@
 			);
 			mainGroup = 657C2DB62A181DD800A9CA01;
 			packageReferences = (
-				65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */,
 				65B8544D2A390DC2000DC1BE /* XCRemoteSwiftPackageReference "amplify-ui-swift-authenticator" */,
+				65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */,
 			);
 			productRefGroup = 657C2DC02A181DD800A9CA01 /* Products */;
 			projectDirPath = "";
@@ -460,12 +463,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+		65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.11.7;
 			};
 		};
 		65B8544D2A390DC2000DC1BE /* XCRemoteSwiftPackageReference "amplify-ui-swift-authenticator" */ = {
@@ -479,29 +482,34 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		65B8543F2A37BD5A000DC1BE /* AWSAPIPlugin */ = {
+		65733E472A4345370049C5C5 /* AWSAPIPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSAPIPlugin;
 		};
-		65B854412A37BD5A000DC1BE /* AWSCognitoAuthPlugin */ = {
+		65733E492A4345370049C5C5 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSCognitoAuthPlugin;
 		};
-		65B854432A37BD5A000DC1BE /* AWSDataStorePlugin */ = {
+		65733E4B2A4345370049C5C5 /* AWSDataStorePlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSDataStorePlugin;
 		};
-		65B854452A37BD5A000DC1BE /* AWSS3StoragePlugin */ = {
+		65733E4D2A4345370049C5C5 /* AWSPredictionsPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSPredictionsPlugin;
+		};
+		65733E4F2A4345370049C5C5 /* AWSS3StoragePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSS3StoragePlugin;
 		};
-		65B854472A37BD5A000DC1BE /* Amplify */ = {
+		65733E512A4345370049C5C5 /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65B8543E2A37BD5A000DC1BE /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 65733E462A4345370049C5C5 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = Amplify;
 		};
 		65B8544E2A390DC2000DC1BE /* Authenticator */ = {
