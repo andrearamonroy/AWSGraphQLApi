@@ -13,14 +13,14 @@ import AWSAPIPlugin
 import AWSCognitoAuthPlugin
 import AWSS3StoragePlugin
 import Authenticator
+//import AWSPredictionsPlugin
 
 
 @main
 struct FrenchAppApp: App {
     //private let dataService = ProductionDataService()
   //  private let audioPlayer = AudioPlayer()
-    
-    init(){
+   init(){
         configureAmplify()
     }
     
@@ -42,11 +42,14 @@ struct FrenchAppApp: App {
         }
     }
 }
+
+
 func configureAmplify() {
     let apiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
     let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
     let s3 = AWSS3StoragePlugin()
     let cognitoAuth = AWSCognitoAuthPlugin()
+    //let predictions = AWSPredictionsPlugin()
     
     do {
         try Amplify.add(plugin: apiPlugin)

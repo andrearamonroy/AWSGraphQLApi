@@ -43,6 +43,13 @@
       "service": "Cognito"
     }
   },
+  "predictions": {
+    "transcription01": {
+      "convertType": "transcription",
+      "providerPlugin": "awscloudformation",
+      "service": "Transcribe"
+    }
+  },
   "storage": {
     "S3frenchBucket": {
       "dependsOn": [],

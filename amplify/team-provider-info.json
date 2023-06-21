@@ -20,6 +20,9 @@
       },
       "storage": {
         "S3frenchBucket": {}
+      },
+      "predictions": {
+        "transcription01": {}
       }
     }
   }
