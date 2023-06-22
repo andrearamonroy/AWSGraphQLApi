@@ -65,7 +65,7 @@ struct DialogView: View {
             //PodcastView3()
         }
         VStack{
-            PodcastView4(audio: audio)
+            PodcastView5(audio: audio)
         }
     }
 }
@@ -192,16 +192,81 @@ struct PodcastView4: View {
                 Button("Stop Audio") {
                     audioPlayer.stopAudio()
                 }
+//                Button("convert to text"){
+//                    do {
+//                        try speechToText(url: url)
+//                    } catch  {
+//                        print("failed to convert audio to text")
+//                    }
+//                }
             } else {
                 Text("Audio URL not available")
             }
         }
         .onAppear {
             audioVM.loadAudio(audioKey: audio)
+          
+        }
+    }
+    
+    func speechToText(url: URL) async throws {
+        let options = Predictions.Convert.SpeechToText.Options(
+            defaultNetworkPolicy: .auto,
+            language: .french
+        )
+
+        let result = try await Amplify.Predictions.convert(
+            .speechToText(url: url), options: options
+        )
+
+        let transcription = result.map(\.transcription)
+
+        for try await transcriptionPart in transcription {
+            print("transcription part: \(transcriptionPart)")
         }
     }
 }
 
+struct PodcastView5: View {
+    var audio: String
+    @StateObject private var audioPlayer = AudioPlayer()
+    @StateObject private var audioVM = AudioVM(audioURLManager: AudioURLManager())
+
+    var body: some View {
+        VStack {
+            if let url = audioVM.audioURL {
+                Button("Play Audio") {
+                    audioPlayer.playAudio(withURL: url)
+                }
+                Button("Stop Audio") {
+                    audioPlayer.stopAudio()
+                }
+                Button("Convert to Text") {
+                    guard let audioURL = audioVM.audioURL else {
+                        return // Return early if audioURL is not available
+                    }
+
+                    Task {
+                        do {
+                            print("Starting speech to text conversion...")
+                            try await audioVM.speechToText(audioURL: audioURL)
+                            print("Speech to text conversion completed successfully.")
+                        } catch {
+                            print("Error converting speech to text: \(error)")
+                        }
+                    }
+                }
+
+            } else {
+                Text("Audio URL not available")
+            }
+        }
+        .onAppear {
+            audioVM.loadAudio(audioKey: audio)
+          
+        }
+    }
+}
 
 
 

@@ -19,6 +19,7 @@
 		65733E252A4339670049C5C5 /* AWSPredictionsPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E242A4339670049C5C5 /* AWSPredictionsPlugin */; };
 		65733E272A4339670049C5C5 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E262A4339670049C5C5 /* AWSS3StoragePlugin */; };
 		65733E292A4339670049C5C5 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 65733E282A4339670049C5C5 /* Amplify */; };
+		65733E542A4395890049C5C5 /* SpeechToTextVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65733E532A4395890049C5C5 /* SpeechToTextVM.swift */; };
 		657C2DC32A181DD800A9CA01 /* FrenchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C2DC22A181DD800A9CA01 /* FrenchAppApp.swift */; };
 		657C2DC52A181DD800A9CA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C2DC42A181DD800A9CA01 /* ContentView.swift */; };
 		657C2DC72A181DDA00A9CA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 657C2DC62A181DDA00A9CA01 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		654F3A332A263D6600C405ED /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		654F3A352A263D7E00C405ED /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		656229112A1BEA1F00FBD080 /* PodcastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastViewModel.swift; sourceTree = "<group>"; };
+		65733E532A4395890049C5C5 /* SpeechToTextVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToTextVM.swift; sourceTree = "<group>"; };
 		657C2DBF2A181DD800A9CA01 /* FrenchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrenchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		657C2DC22A181DD800A9CA01 /* FrenchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrenchAppApp.swift; sourceTree = "<group>"; };
 		657C2DC42A181DD800A9CA01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				65B8543C2A3675C7000DC1BE /* AudioManager.swift */,
 				656229112A1BEA1F00FBD080 /* PodcastViewModel.swift */,
 				65B8544B2A390925000DC1BE /* CognitoAuthVM.swift */,
+				65733E532A4395890049C5C5 /* SpeechToTextVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				657C2DC52A181DD800A9CA01 /* ContentView.swift in Sources */,
 				654F3A342A263D6600C405ED /* PlayerView.swift in Sources */,
 				657C2DC32A181DD800A9CA01 /* FrenchAppApp.swift in Sources */,
+				65733E542A4395890049C5C5 /* SpeechToTextVM.swift in Sources */,
 				654F3A362A263D7E00C405ED /* PlayButton.swift in Sources */,
 				64C9975427DCA45AA44743D2 /* AmplifyModels.swift in Sources */,
 				656229122A1BEA1F00FBD080 /* PodcastViewModel.swift in Sources */,

@@ -26,7 +26,7 @@ class AudioPlayer: NSObject, ObservableObject {
 }
 
 class AudioURLManager {
-    func getUrl(audioKey: String) ->   Future<URL, Error> {
+    func getUrl(audioKey: String) -> Future<URL, Error> {
         Future { promise in
             Task {
                 do {
@@ -76,6 +76,23 @@ class AudioVM: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func speechToText(audioURL: URL) async throws {
+        let options = Predictions.Convert.SpeechToText.Options(
+            defaultNetworkPolicy: .auto,
+            language: .usEnglish
+        )
+
+        let result = try await Amplify.Predictions.convert(
+            .speechToText(url: audioURL), options: options
+        )
+
+        let transcription = result.map(\.transcription)
+
+        for try await transcriptionPart in transcription {
+            print("transcription part: \(transcriptionPart)")
+        }
     }
 }
 

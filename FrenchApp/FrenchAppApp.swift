@@ -13,7 +13,7 @@ import AWSAPIPlugin
 import AWSCognitoAuthPlugin
 import AWSS3StoragePlugin
 import Authenticator
-//import AWSPredictionsPlugin
+import AWSPredictionsPlugin
 
 
 @main
@@ -49,13 +49,14 @@ func configureAmplify() {
     let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
     let s3 = AWSS3StoragePlugin()
     let cognitoAuth = AWSCognitoAuthPlugin()
-    //let predictions = AWSPredictionsPlugin()
+    let predictions = AWSPredictionsPlugin()
     
     do {
         try Amplify.add(plugin: apiPlugin)
         try Amplify.add(plugin: dataStorePlugin)
         try Amplify.add(plugin: s3)
         try Amplify.add(plugin: cognitoAuth)
+        try Amplify.add(plugin: predictions)
         try Amplify.configure()
         print("Initialized Amplify");
     } catch {
