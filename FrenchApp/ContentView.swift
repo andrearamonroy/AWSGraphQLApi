@@ -40,33 +40,73 @@ struct DialogView: View {
     var audio: String
     //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
     @State private var tappedIndices: [Int] = []
-    
+    // var coloredDialog: [String]
     
     var body: some View {
+        
         VStack {
-            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
+            List(dialog.indices, id: \.self) { index in
                 let dialogText = dialog[index]
-                Text(dialogText)
-                    .foregroundColor(.primary)
+                let isEven = index % 2 == 0
+                
+                if index == 0 || isEven {
+                    let direction: DialogRowDirection = (index / 2) % 2 == 0 ? .left : .right
+                    let backgroundColor : Color = direction == .left ? .gray : .blue
+                    let foregroundColor : Color = direction == .left ? .black : .white
+                    //let rowAlignment: HorizontalAlignment = direction == .left ? .leading : .trailing
+                    let frameAlignment: Alignment = direction == .left ? .leading : .trailing
+                                   
+                    DialogRow(
+                        text: dialogText,
+                        textColor: foregroundColor,
+                        backgroundColor: backgroundColor,
+                        direction: direction
+                    )
+                    .frame(maxWidth: .infinity, alignment: frameAlignment)
                     .onTapGesture {
                         tappedIndices.append(index)
                     }
+                }
                 
                 if tappedIndices.contains(index) {
                     let oddIndex = index + 1
                     if oddIndex < dialog.count {
                         let oddText = dialog[oddIndex]
                         Text(oddText)
-                            .foregroundColor(.white)
-                            .listRowBackground(Color.gray)
                     }
                 }
             }
-            //PodcastView3()
         }
-        VStack{
+        VStack {
             PodcastView4(audio: audio)
         }
+    }
+}
+
+enum DialogRowDirection {
+    case left
+    case right
+}
+struct DialogRow: View {
+    let text: String
+    let textColor: Color
+    let backgroundColor: Color
+    let direction: DialogRowDirection
+    
+    var body: some View{
+        Text(text)
+            .padding()
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .clipShape(RoundedRectangle(cornerRadius: 16.0, style: .continuous))
+            .listRowSeparator(.hidden)
+            .overlay(alignment: direction == .left ? .bottomLeading: .bottomTrailing) {
+                Image(systemName: "arrowtriangle.down.fill")
+                    .font(.title)
+                    .rotationEffect(.degrees(direction == .left ? 45: -45))
+                    .offset(x: direction == .left ? -10: 10, y: 10)
+                    .foregroundColor(backgroundColor)
+            }
     }
 }
 
