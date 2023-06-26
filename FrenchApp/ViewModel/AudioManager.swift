@@ -14,16 +14,66 @@ import Combine
 
 class AudioPlayer: NSObject, ObservableObject {
     private var player: AVPlayer?
-
+    private var currentTime: CMTime = .zero
+    @Published var isPlaying: Bool = false
+    
+    @Published var playbackSpeed: Float = 1.0 {
+            didSet {
+                player?.rate = playbackSpeed
+            }
+        }
+    
     func playAudio(withURL url: URL) {
-        player = AVPlayer(url: url)
-        player?.play()
+        if player == nil || !isPlaying {
+            player = AVPlayer(url: url)
+            player?.seek(to: currentTime)
+            player?.play()
+            isPlaying = true
+            
+        }
     }
-
+    
+    func pauseAudio() {
+        if let player = player {
+            currentTime = player.currentTime()
+            player.pause()
+            isPlaying = false
+        }
+    }
+    
     func stopAudio() {
-        player?.pause()
+        if let player = player {
+            player.pause()
+            player.replaceCurrentItem(with: nil)
+            currentTime = .zero
+            isPlaying = false
+        }
+    }
+    
+    func togglePlayback(withURL url: URL) {
+        if isPlaying {
+            pauseAudio()
+        } else {
+            playAudio(withURL: url)
+        }
+    }
+    func seekBackward() {
+        guard let player = player else { return }
+        let currentTime = player.currentTime()
+        let backwardTime = CMTime(seconds: 10, preferredTimescale: 1)
+        let newTime = currentTime - backwardTime
+        player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
+    }
+    
+    func seekForward() {
+        guard let player = player else { return }
+        let currentTime = player.currentTime()
+        let forwardTime = CMTime(seconds: 10, preferredTimescale: 1)
+        let newTime = currentTime + forwardTime
+        player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
 }
+
 
 class AudioURLManager {
     func getUrl(audioKey: String) ->   Future<URL, Error> {
