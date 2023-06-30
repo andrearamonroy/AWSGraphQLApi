@@ -44,7 +44,7 @@ struct DialogView: View {
     
     var body: some View {
         VStack {
-            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
+            ForEach(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
                 let dialogText = dialog[index]
                 Text(dialogText)
                     .foregroundColor(.primary)
