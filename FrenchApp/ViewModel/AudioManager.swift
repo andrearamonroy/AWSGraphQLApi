@@ -26,6 +26,7 @@ class AudioPlayer: NSObject, ObservableObject {
     
     //slider
     @Published var sliderValue: Double = 0.0
+    private var timeObserver: Any?
     
     
     
@@ -80,7 +81,23 @@ class AudioPlayer: NSObject, ObservableObject {
     }
     
     //slider
-    
+    private func observePlaybackTime() {
+            guard let player = player else { return }
+            
+            timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 1), queue: .main) { [weak self] time in
+                guard let self = self else { return }
+                let duration = player.currentItem?.duration ?? .zero
+                let progress = time.seconds / duration.seconds * 100
+                self.sliderValue = progress
+            }
+        }
+        
+        private func removeTimeObserver() {
+            if let observer = timeObserver {
+                player?.removeTimeObserver(observer)
+                timeObserver = nil
+            }
+        }
 
 }
 

@@ -35,9 +35,18 @@ struct PodcastView: View {
                     .padding(20)
                     
                     // Slider
-                    Slider(value: $value, in: 0...100) { editing in
+                    Slider(value: $audioPlayer.sliderValue, in: 0...100, onEditingChanged: { editing in
                         isEditing = editing
+                    }) { 
+                        if isEditing {
+                            Image(systemName: "pause.fill") // Customize the appearance when the user is editing the slider
+                        } else {
+                            Image(systemName: "play.fill") // Customize the appearance when the user is not editing the slider
+                        }
                     }
+                    .accentColor(.green) // Customize the color of the slider track and thumb
+                    .padding(.horizontal, 20)
+
                     
                     
                     

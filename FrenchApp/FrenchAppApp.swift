@@ -26,6 +26,7 @@ struct FrenchAppApp: App {
     
     var body: some Scene {
         WindowGroup {
+          
             Authenticator { state in
                 VStack {
                     Text("Hello, \(state.user.username)")
@@ -36,7 +37,7 @@ struct FrenchAppApp: App {
                         }
                     }
                 }
-                
+
             }
         }
     }
