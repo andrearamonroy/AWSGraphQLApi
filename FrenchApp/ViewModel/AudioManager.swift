@@ -13,8 +13,9 @@ import Combine
 
 
 class AudioPlayer: NSObject, ObservableObject {
-    private var player: AVPlayer?
-    private var currentTime: CMTime = .zero
+    var player: AVPlayer?
+    var currentTime: CMTime = .zero
+    
     @Published var isPlaying: Bool = false
     
     @Published var playbackSpeed: Float = 1.0 {
@@ -22,6 +23,11 @@ class AudioPlayer: NSObject, ObservableObject {
                 player?.rate = playbackSpeed
             }
         }
+    
+    //slider
+    @Published var sliderValue: Double = 0.0
+    
+    
     
     func playAudio(withURL url: URL) {
         if player == nil || !isPlaying {
@@ -72,6 +78,10 @@ class AudioPlayer: NSObject, ObservableObject {
         let newTime = currentTime + forwardTime
         player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
+    
+    //slider
+    
+
 }
 
 

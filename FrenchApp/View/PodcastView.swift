@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct PodcastView: View {
     var audio: String
     @StateObject private var audioPlayer = AudioPlayer()
     @StateObject private var audioVM = AudioVM(audioURLManager: AudioURLManager())
     @State private var value: Double = 0.0
+    @State private var isEditing = false
+    
+    
+//    let timer = Timer
+//        .publish(every: 0.5, on: .main, in: .common)
+       // .autoconnect()
+
 
     var body: some View {
         VStack {
@@ -19,14 +27,22 @@ struct PodcastView: View {
                 VStack {
                     HStack {
                         playbackSpeedMenu
-                   
+                        
                         playbackControlButtons(url: url)
-                      
+                        
                         PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
                     }
                     .padding(20)
-
+                    
                     // Slider
+                    Slider(value: $value, in: 0...100) { editing in
+                        isEditing = editing
+                    }
+                    
+                    
+                    
+                    
+                    
                 }
             } else {
                 Text("Audio URL not available")
@@ -34,7 +50,9 @@ struct PodcastView: View {
         }
         .onAppear {
             audioVM.loadAudio(audioKey: audio)
+        
         }
+     
     }
     
     private var playbackSpeedMenu: some View {
