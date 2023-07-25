@@ -27,7 +27,6 @@
 		65B8544C2A390925000DC1BE /* CognitoAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8544B2A390925000DC1BE /* CognitoAuthVM.swift */; };
 		65B8544F2A390DC2000DC1BE /* Authenticator in Frameworks */ = {isa = PBXBuildFile; productRef = 65B8544E2A390DC2000DC1BE /* Authenticator */; };
 		65C7C2A72A477F9F00016187 /* DialogBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7C2A62A477F9F00016187 /* DialogBubble.swift */; };
-		65C7C2A92A47881B00016187 /* DialogDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7C2A82A47881B00016187 /* DialogDirection.swift */; };
 		65C7C2AB2A47887A00016187 /* DialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7C2AA2A47887A00016187 /* DialogView.swift */; };
 		65C7C2AD2A478A7D00016187 /* PodcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C7C2AC2A478A7D00016187 /* PodcastView.swift */; };
 		CCD96679DD436622A0763B2E /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689CA9B481301F395A695A0 /* Podcast.swift */; };
@@ -49,7 +48,6 @@
 		65B8543C2A3675C7000DC1BE /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		65B8544B2A390925000DC1BE /* CognitoAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CognitoAuthVM.swift; sourceTree = "<group>"; };
 		65C7C2A62A477F9F00016187 /* DialogBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBubble.swift; sourceTree = "<group>"; };
-		65C7C2A82A47881B00016187 /* DialogDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogDirection.swift; sourceTree = "<group>"; };
 		65C7C2AA2A47887A00016187 /* DialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogView.swift; sourceTree = "<group>"; };
 		65C7C2AC2A478A7D00016187 /* PodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastView.swift; sourceTree = "<group>"; };
 		69C011DCF1152CCCC586BBF0 /* AmplifyModels.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = AmplifyModels.swift; path = amplify/generated/models/AmplifyModels.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 				654F3A332A263D6600C405ED /* PlayerView.swift */,
 				654F3A352A263D7E00C405ED /* PlayButton.swift */,
 				65C7C2A62A477F9F00016187 /* DialogBubble.swift */,
-				65C7C2A82A47881B00016187 /* DialogDirection.swift */,
 				65C7C2AA2A47887A00016187 /* DialogView.swift */,
 				65C7C2AC2A478A7D00016187 /* PodcastView.swift */,
 			);
@@ -261,7 +258,6 @@
 				656229122A1BEA1F00FBD080 /* PodcastViewModel.swift in Sources */,
 				65B8543D2A3675C7000DC1BE /* AudioManager.swift in Sources */,
 				FF1297FF7C336894313921D9 /* Podcast+Schema.swift in Sources */,
-				65C7C2A92A47881B00016187 /* DialogDirection.swift in Sources */,
 				65C7C2A72A477F9F00016187 /* DialogBubble.swift in Sources */,
 				CCD96679DD436622A0763B2E /* Podcast.swift in Sources */,
 			);

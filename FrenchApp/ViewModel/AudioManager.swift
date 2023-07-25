@@ -11,7 +11,7 @@ import Amplify
 import AWSS3StoragePlugin
 import Combine
 
-
+@MainActor
 class AudioPlayer: NSObject, ObservableObject {
     var player: AVPlayer?
     var currentTime: CMTime = .zero
@@ -25,8 +25,8 @@ class AudioPlayer: NSObject, ObservableObject {
         }
     
     //slider
-    @Published var sliderValue: Double = 0.0
-    private var timeObserver: Any?
+//    @Published var sliderValue: Double = 0.0
+//    private var timeObserver: Any?
     
     
     
@@ -36,6 +36,7 @@ class AudioPlayer: NSObject, ObservableObject {
             player?.seek(to: currentTime)
             player?.play()
             isPlaying = true
+            //observePlaybackTime()
             
         }
     }
@@ -80,50 +81,46 @@ class AudioPlayer: NSObject, ObservableObject {
         player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
     
-    //slider
-    private func observePlaybackTime() {
-            guard let player = player else { return }
-            
-            timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 1), queue: .main) { [weak self] time in
-                guard let self = self else { return }
-                let duration = player.currentItem?.duration ?? .zero
-                let progress = time.seconds / duration.seconds * 100
-                self.sliderValue = progress
-            }
-        }
-        
-        private func removeTimeObserver() {
-            if let observer = timeObserver {
-                player?.removeTimeObserver(observer)
-                timeObserver = nil
-            }
-        }
+//    //slider
+//    private func observePlaybackTime() {
+//            guard let player = player else { return }
+//
+//            timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 1), queue: .main) { [weak self] time in
+//                guard let self = self else { return }
+//                let duration = player.currentItem?.duration ?? .zero
+//                let progress = time.seconds / duration.seconds * 100
+//                print(progress)
+//                self.sliderValue = progress
+//            }
+//        }
+//
+//        private func removeTimeObserver() {
+//            if let observer = timeObserver {
+//                player?.removeTimeObserver(observer)
+//                timeObserver = nil
+//            }
+//        }
 
 }
 
 
 class AudioURLManager {
-    func getUrl(audioKey: String) ->   Future<URL, Error> {
-        Future { promise in
-            Task {
-                do {
-                    let url = try await Amplify.Storage.getURL(
-                        key: audioKey, // Replace with your audio variable from DynamoDB
-                        options: .init(
-                            pluginOptions: AWSStorageGetURLOptions(
-                                validateObjectExistence: true
-                            )
+    func getUrl(audioKey: String) async throws -> URL {
+            do {
+                let url = try await Amplify.Storage.getURL(
+                    key: audioKey, // Replace with your audio variable from DynamoDB
+                    options: .init(
+                        pluginOptions: AWSStorageGetURLOptions(
+                            validateObjectExistence: true
                         )
                     )
-                    promise(.success(url))
-                } catch {
-                    promise(.failure(error))
-                }
+                )
+                return url
+            } catch {
+                throw error
             }
-        }
-    
     }
-       
+    
 }
 
 class AudioVM: ObservableObject {
@@ -136,23 +133,16 @@ class AudioVM: ObservableObject {
     }
     
     func loadAudio(audioKey: String) {
-        audioURLManager.getUrl(audioKey: audioKey)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print("Failed to get the URL: \(error)")
-                    }
-                }
-            } receiveValue: { url in
+        Task {
+            do{
+                let url = try await audioURLManager.getUrl(audioKey: audioKey)
                 DispatchQueue.main.async {
                     self.audioURL = url
                 }
+            } catch {
+                print("Failed to get the URL: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
 }
 

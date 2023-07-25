@@ -35,21 +35,7 @@ struct PodcastView: View {
                     .padding(20)
                     
                     // Slider
-                    Slider(value: $audioPlayer.sliderValue, in: 0...100, onEditingChanged: { editing in
-                        isEditing = editing
-                    }) { 
-                        if isEditing {
-                            Image(systemName: "pause.fill") // Customize the appearance when the user is editing the slider
-                        } else {
-                            Image(systemName: "play.fill") // Customize the appearance when the user is not editing the slider
-                        }
-                    }
-                    .accentColor(.green) // Customize the color of the slider track and thumb
-                    .padding(.horizontal, 20)
-
-                    
-                    
-                    
+    
                     
                     
                 }
@@ -86,7 +72,7 @@ struct PodcastView: View {
     private func playbackControlButtons(url: URL) -> some View {
         HStack {
             PlayButton(systemName: "gobackward.10") { audioPlayer.seekBackward() }
-           
+
             PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play") { audioPlayer.togglePlayback(withURL: url) }
             
             PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
