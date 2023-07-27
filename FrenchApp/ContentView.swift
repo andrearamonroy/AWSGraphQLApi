@@ -11,27 +11,55 @@ import AVFoundation
 import AWSS3StoragePlugin
 import AWSCognitoAuthPlugin
 import UIKit
+import Authenticator
 
 
 struct ContentView: View {
     @StateObject private var vm : PodcastViewModel
+    @State private var showSettings: Bool = false
+    
     
     init(dataService: ProductionDataService) {
-          _vm = StateObject(wrappedValue: PodcastViewModel(dataService: dataService))
-       }
-
+        _vm = StateObject(wrappedValue: PodcastViewModel(dataService: dataService))
+    }
+    
     var body: some View {
+        
+        
+        
+        VStack{
+            NavigationLink {
+                SettingsView()
+            } label: {
+                HStack {
+                    Spacer()
+                    SettingsButton()
+                }
+                .padding()
 
-        NavigationView {
-            List {
+            }
+
+            Spacer()
+            VStack{
+                
                 ForEach(vm.podcasts, id: \.id) { podcast in
                     NavigationLink(destination: DialogView(dialog: podcast.dialog)) {
                         Text(podcast.title)
-                        Text(podcast.audio)
+                        
                     }
                 }
             }
-       }
+            Spacer()
+        }
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView{
+            let dataService = ProductionDataService() // You should provide your actual data service here.
+            ContentView(dataService: dataService)
+                .toolbar(.hidden)
+        }
     }
 }
 
@@ -63,9 +91,9 @@ struct DialogView: View {
             }
             //PodcastView3()
         }
-        VStack{
-            PodcastView3()
-        }
+//        VStack{
+//            PodcastView3()
+//        }
     }
 }
 
@@ -145,49 +173,49 @@ class AudioPlayer: NSObject, ObservableObject {
         player?.pause()
     }
 }
-
-struct PodcastView3: View {
-    @StateObject private var audioPlayer = AudioPlayer()
-    @State private var audioURL: URL?
-
-    var body: some View {
-        VStack {
-            if let url = audioURL {
-                Text("Audio URL: \(url.absoluteString)")
-                    .padding()
-                Button("Play Audio") {
-                    audioPlayer.playAudio(withURL: url)
-                }
-                Button("Stop Audio") {
-                    audioPlayer.stopAudio()
-                }
-            } else {
-                Text("Audio URL not available")
-            }
-        }
-        .onAppear {
-            getAudioURL()
-        }
-    }
-
-    func getAudioURL() {
-        Task {
-            do {
-                let url = try await Amplify.Storage.getURL(
-                    key: "verbeAvoir.mp3", //here is where i change it to audio variable from dynamoDB.
-                    options: .init(
-                        pluginOptions: AWSStorageGetURLOptions(
-                            validateObjectExistence: true
-                        )
-                    )
-                )
-                audioURL = url
-            } catch {
-                print("Failed to get the URL: \(error)")
-            }
-        }
-    }
-}
+//
+//struct PodcastView3: View {
+//    @StateObject private var audioPlayer = AudioPlayer()
+//    @State private var audioURL: URL?
+//
+//    var body: some View {
+//        VStack {
+//            if let url = audioURL {
+//                Text("Audio URL: \(url.absoluteString)")
+//                    .padding()
+//                Button("Play Audio") {
+//                    audioPlayer.playAudio(withURL: url)
+//                }
+//                Button("Stop Audio") {
+//                    audioPlayer.stopAudio()
+//                }
+//            } else {
+//                Text("Audio URL not available")
+//            }
+//        }
+//        .onAppear {
+//            getAudioURL()
+//        }
+//    }
+//
+//    func getAudioURL() {
+//        Task {
+//            do {
+//                let url = try await Amplify.Storage.getURL(
+//                    key: "verbeAvoir.mp3", //here is where i change it to audio variable from dynamoDB.
+//                    options: .init(
+//                        pluginOptions: AWSStorageGetURLOptions(
+//                            validateObjectExistence: true
+//                        )
+//                    )
+//                )
+//                audioURL = url
+//            } catch {
+//                print("Failed to get the URL: \(error)")
+//            }
+//        }
+//    }
+//}
 
 
 
