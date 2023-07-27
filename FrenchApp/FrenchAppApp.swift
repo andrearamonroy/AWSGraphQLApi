@@ -18,14 +18,21 @@ import AWSPredictionsPlugin
 
 @main
 struct FrenchAppApp: App {
+<<<<<<< HEAD
    
+=======
+    //private let dataService = ProductionDataService()
+    //  private let audioPlayer = AudioPlayer()
+>>>>>>> cognitoAuth
     
    init(){
         configureAmplify()
     }
     
     var body: some Scene {
+        
         WindowGroup {
+<<<<<<< HEAD
           
             Authenticator { state in
                 VStack {
@@ -38,10 +45,16 @@ struct FrenchAppApp: App {
                     }
                 }
 
+=======
+            NavigationView{
+                AuthenticatorView()
+                    .navigationBarHidden(true)
+>>>>>>> cognitoAuth
             }
         }
     }
 }
+
 func configureAmplify() {
     let apiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
     let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
@@ -62,3 +75,17 @@ func configureAmplify() {
         print("Could not initialize Amplify: \(error)")
     }
 }
+
+//Authenticator { state in
+//                VStack {
+//                    Text("Hello, \(state.user.username)")
+//                    ContentView(dataService: ProductionDataService())
+//                    Button("Sign out") {
+//                        Task {
+//                            await state.signOut()
+//                        }
+//                    }
+//                }
+//
+//            }
+//            //ContentView(dataService: ProductionDataService())

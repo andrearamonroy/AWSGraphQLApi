@@ -11,30 +11,98 @@ import AVFoundation
 import AWSS3StoragePlugin
 import AWSCognitoAuthPlugin
 import UIKit
+import Authenticator
 
 
 struct ContentView: View {
     @StateObject private var vm : PodcastViewModel
+    @State private var showSettings: Bool = false
+    
     
     init(dataService: ProductionDataService) {
-          _vm = StateObject(wrappedValue: PodcastViewModel(dataService: dataService))
-       }
-
+        _vm = StateObject(wrappedValue: PodcastViewModel(dataService: dataService))
+    }
+    
     var body: some View {
+        
+        
+        
+        VStack{
+            NavigationLink {
+                SettingsView()
+            } label: {
+                HStack {
+                    Spacer()
+                    SettingsButton()
+                }
+                .padding()
 
-        NavigationView {
-            List {
+            }
+
+            Spacer()
+            VStack{
+                
                 ForEach(vm.podcasts, id: \.id) { podcast in
                     NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
                         Text(podcast.title)
+<<<<<<< HEAD
                         //Text(podcast.audio)
+=======
+                        
+>>>>>>> cognitoAuth
                     }
                 }
             }
-       }
+            Spacer()
+        }
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView{
+            let dataService = ProductionDataService() // You should provide your actual data service here.
+            ContentView(dataService: dataService)
+                .toolbar(.hidden)
+        }
     }
 }
 
+<<<<<<< HEAD
+=======
+struct DialogView: View {
+    var dialog: [String]
+    //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
+    @State private var tappedIndices: [Int] = []
+    
+    
+    var body: some View {
+        VStack {
+            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
+                let dialogText = dialog[index]
+                Text(dialogText)
+                    .foregroundColor(.primary)
+                    .onTapGesture {
+                        tappedIndices.append(index)
+                    }
+                
+                if tappedIndices.contains(index) {
+                    let oddIndex = index + 1
+                    if oddIndex < dialog.count {
+                        let oddText = dialog[oddIndex]
+                        Text(oddText)
+                            .foregroundColor(.white)
+                            .listRowBackground(Color.gray)
+                    }
+                }
+            }
+            //PodcastView3()
+        }
+//        VStack{
+//            PodcastView3()
+//        }
+    }
+}
+>>>>>>> cognitoAuth
 
 
 
@@ -114,6 +182,64 @@ struct PodcastView2: View {
 
 
 
+<<<<<<< HEAD
+=======
+class AudioPlayer: NSObject, ObservableObject {
+    private var player: AVPlayer?
+
+    func playAudio(withURL url: URL) {
+        player = AVPlayer(url: url)
+        player?.play()
+    }
+
+    func stopAudio() {
+        player?.pause()
+    }
+}
+//
+//struct PodcastView3: View {
+//    @StateObject private var audioPlayer = AudioPlayer()
+//    @State private var audioURL: URL?
+//
+//    var body: some View {
+//        VStack {
+//            if let url = audioURL {
+//                Text("Audio URL: \(url.absoluteString)")
+//                    .padding()
+//                Button("Play Audio") {
+//                    audioPlayer.playAudio(withURL: url)
+//                }
+//                Button("Stop Audio") {
+//                    audioPlayer.stopAudio()
+//                }
+//            } else {
+//                Text("Audio URL not available")
+//            }
+//        }
+//        .onAppear {
+//            getAudioURL()
+//        }
+//    }
+//
+//    func getAudioURL() {
+//        Task {
+//            do {
+//                let url = try await Amplify.Storage.getURL(
+//                    key: "verbeAvoir.mp3", //here is where i change it to audio variable from dynamoDB.
+//                    options: .init(
+//                        pluginOptions: AWSStorageGetURLOptions(
+//                            validateObjectExistence: true
+//                        )
+//                    )
+//                )
+//                audioURL = url
+//            } catch {
+//                print("Failed to get the URL: \(error)")
+//            }
+//        }
+//    }
+//}
+>>>>>>> cognitoAuth
 
 
 

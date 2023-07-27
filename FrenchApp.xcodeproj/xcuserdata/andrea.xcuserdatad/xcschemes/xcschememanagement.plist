@@ -7,7 +7,11 @@
 		<key>FrenchApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
 			<integer>0</integer>
+=======
+			<integer>15</integer>
+>>>>>>> cognitoAuth
 		</dict>
 		<key>SQLite (Playground) 1.xcscheme</key>
 		<dict>
