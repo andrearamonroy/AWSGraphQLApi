@@ -18,12 +18,7 @@ import AWSPredictionsPlugin
 
 @main
 struct FrenchAppApp: App {
-<<<<<<< HEAD
-   
-=======
-    //private let dataService = ProductionDataService()
-    //  private let audioPlayer = AudioPlayer()
->>>>>>> cognitoAuth
+
     
    init(){
         configureAmplify()
@@ -32,24 +27,9 @@ struct FrenchAppApp: App {
     var body: some Scene {
         
         WindowGroup {
-<<<<<<< HEAD
-          
-            Authenticator { state in
-                VStack {
-                    Text("Hello, \(state.user.username)")
-                    ContentView(dataService: ProductionDataService())
-                    Button("Sign out") {
-                        Task {
-                            await state.signOut()
-                        }
-                    }
-                }
-
-=======
             NavigationView{
                 AuthenticatorView()
                     .navigationBarHidden(true)
->>>>>>> cognitoAuth
             }
         }
     }
