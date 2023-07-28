@@ -112,16 +112,16 @@
 			children = (
 				654F3A332A263D6600C405ED /* PlayerView.swift */,
 				654F3A352A263D7E00C405ED /* PlayButton.swift */,
-<<<<<<< HEAD
+
 				65C7C2A62A477F9F00016187 /* DialogBubble.swift */,
 				65C7C2AA2A47887A00016187 /* DialogView.swift */,
 				65C7C2AC2A478A7D00016187 /* PodcastView.swift */,
-=======
+
 				6549A5652A70794E00F684FD /* AuthenticatorView.swift */,
 				6549A5672A71B04500F684FD /* SettingsView.swift */,
 				6549A5692A71BD8E00F684FD /* SettingsButton.swift */,
 				6549A56D2A730B5400F684FD /* BackButton.swift */,
->>>>>>> cognitoAuth
+
 			);
 			path = View;
 			sourceTree = "<group>";
