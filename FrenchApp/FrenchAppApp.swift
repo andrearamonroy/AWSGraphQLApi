@@ -18,29 +18,23 @@ import AWSPredictionsPlugin
 
 @main
 struct FrenchAppApp: App {
-   
+
     
    init(){
         configureAmplify()
     }
     
     var body: some Scene {
+        
         WindowGroup {
-            Authenticator { state in
-                VStack {
-                    Text("Hello, \(state.user.username)")
-                    ContentView(dataService: ProductionDataService())
-                    Button("Sign out") {
-                        Task {
-                            await state.signOut()
-                        }
-                    }
-                }
-                
+            NavigationView{
+                AuthenticatorView()
+                    .navigationBarHidden(true)
             }
         }
     }
 }
+
 func configureAmplify() {
     let apiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
     let dataStorePlugin = AWSDataStorePlugin(modelRegistration: AmplifyModels())
@@ -61,3 +55,17 @@ func configureAmplify() {
         print("Could not initialize Amplify: \(error)")
     }
 }
+
+//Authenticator { state in
+//                VStack {
+//                    Text("Hello, \(state.user.username)")
+//                    ContentView(dataService: ProductionDataService())
+//                    Button("Sign out") {
+//                        Task {
+//                            await state.signOut()
+//                        }
+//                    }
+//                }
+//
+//            }
+//            //ContentView(dataService: ProductionDataService())

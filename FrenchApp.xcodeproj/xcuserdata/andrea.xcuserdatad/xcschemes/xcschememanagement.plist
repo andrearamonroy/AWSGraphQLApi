@@ -8,6 +8,9 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+
+			<integer>15</integer>
+
 		</dict>
 		<key>SQLite (Playground) 1.xcscheme</key>
 		<dict>
