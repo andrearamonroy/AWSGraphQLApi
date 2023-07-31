@@ -18,18 +18,21 @@ import AWSPredictionsPlugin
 
 @main
 struct FrenchAppApp: App {
-
     
-   init(){
+    
+    init(){
         configureAmplify()
+        print("configured")
     }
     
     var body: some Scene {
         
         WindowGroup {
             NavigationView{
-                AuthenticatorView()
-                    .navigationBarHidden(true)
+                ContentView(dataService: ProductionDataService())
+                //AuthenticatorView()
+                //   .navigationBarHidden(true)
+                //}
             }
         }
     }

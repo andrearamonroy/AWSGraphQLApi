@@ -26,31 +26,41 @@ struct ContentView: View {
     var body: some View {
         
         
+        //        VStack{
+        //            NavigationLink {
+        //                SettingsView()
+        //            } label: {
+        //                HStack {
+        //                    Spacer()
+        //                    SettingsButton()
+        //                }
+        //
+        //
+        //            }
+        //
+        //            Spacer()
+        
+        
         
         VStack{
-            NavigationLink {
-                SettingsView()
-            } label: {
-                HStack {
-                    Spacer()
-                    SettingsButton()
-                }
-                .padding()
-
-            }
-
-            Spacer()
-            VStack{
+            
+            ForEach(vm.podcasts, id: \.id) { podcast in
+                NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
+                    Text(podcast.title)
+                    Text(podcast.audio)
                 
-                ForEach(vm.podcasts, id: \.id) { podcast in
-                    NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
-                        Text(podcast.title)
+                    
+
                 }
             }
             Spacer()
         }
     }
 }
+
+        
+   
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
@@ -136,6 +146,7 @@ struct PodcastView2: View {
             print("Error: \(error)")
         }
     }
+
 }
 
 

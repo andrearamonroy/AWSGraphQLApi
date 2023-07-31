@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DialogView: View {
-    var dialog: [String]
+    var dialog: [String] = []
     var audio: String
    // @State private var tappedIndices: [Int] = []
 
@@ -23,9 +23,9 @@ struct DialogView: View {
             }
         }
         .padding()
-        VStack {
-            PodcastView(audio: audio)
-        }
+//        VStack {
+//            PodcastView(audio: audio)
+//        }
     }
 }
 struct DialogView_Previews: PreviewProvider {

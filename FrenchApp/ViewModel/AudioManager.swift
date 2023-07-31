@@ -1,10 +1,10 @@
+////
+////  AudioManager.swift
+////  FrenchApp
+////
+////  Created by Andrea on 6/11/23.
 //
-//  AudioManager.swift
-//  FrenchApp
 //
-//  Created by Andrea on 6/11/23.
-
-
 import Foundation
 import AVFoundation
 import Amplify
@@ -81,25 +81,7 @@ class AudioPlayer: NSObject, ObservableObject {
         player.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
     
-//    //slider
-//    private func observePlaybackTime() {
-//            guard let player = player else { return }
-//
-//            timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 1), queue: .main) { [weak self] time in
-//                guard let self = self else { return }
-//                let duration = player.currentItem?.duration ?? .zero
-//                let progress = time.seconds / duration.seconds * 100
-//                print(progress)
-//                self.sliderValue = progress
-//            }
-//        }
-//
-//        private func removeTimeObserver() {
-//            if let observer = timeObserver {
-//                player?.removeTimeObserver(observer)
-//                timeObserver = nil
-//            }
-//        }
+
 
 }
 
@@ -147,4 +129,4 @@ class AudioVM: ObservableObject {
 }
 
 
-//
+
