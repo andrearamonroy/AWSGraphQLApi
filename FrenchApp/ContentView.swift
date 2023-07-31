@@ -92,12 +92,13 @@ struct DialogView: View {
             }
             //PodcastView3()
         }
-
+        
         VStack{
             PlayerView(audio: audio)
         }
-
-
+        
+        
+    }
 }
 
 struct PodcastView: View {
