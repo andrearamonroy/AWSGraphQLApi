@@ -72,7 +72,7 @@ struct PlayerView: View {
         HStack {
             PlayButton(systemName: "gobackward.10") { audioPlayer.seekBackward() }
 
-            PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play") { audioPlayer.togglePlayback(withURL: url) }
+            PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play", fontSize: 44) { audioPlayer.togglePlayback(withURL: url) }
             
             PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
             

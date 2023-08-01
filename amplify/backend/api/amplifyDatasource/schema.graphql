@@ -2,6 +2,7 @@ type Podcast @model
 @auth(rules: [{ allow: public}] ) {
   id: ID!
   title: String!
+  level: String!
   audio: String!
   dialog: [String!]!
 }

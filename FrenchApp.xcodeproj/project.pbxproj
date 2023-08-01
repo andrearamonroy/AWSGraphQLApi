@@ -21,6 +21,7 @@
 		657C2DC52A181DD800A9CA01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C2DC42A181DD800A9CA01 /* ContentView.swift */; };
 		657C2DC72A181DDA00A9CA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 657C2DC62A181DDA00A9CA01 /* Assets.xcassets */; };
 		657C2DCB2A181DDA00A9CA01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 657C2DCA2A181DDA00A9CA01 /* Preview Assets.xcassets */; };
+		659754E32A79AD1400A5EA18 /* BeginnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659754E22A79AD1400A5EA18 /* BeginnerView.swift */; };
 		65B8543D2A3675C7000DC1BE /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8543C2A3675C7000DC1BE /* AudioManager.swift */; };
 		65B854402A37BD5A000DC1BE /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B8543F2A37BD5A000DC1BE /* AWSAPIPlugin */; };
 		65B854422A37BD5A000DC1BE /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 65B854412A37BD5A000DC1BE /* AWSCognitoAuthPlugin */; };
@@ -49,6 +50,7 @@
 		657C2DC62A181DDA00A9CA01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		657C2DC82A181DDA00A9CA01 /* FrenchApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FrenchApp.entitlements; sourceTree = "<group>"; };
 		657C2DCA2A181DDA00A9CA01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		659754E22A79AD1400A5EA18 /* BeginnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginnerView.swift; sourceTree = "<group>"; };
 		65B8543C2A3675C7000DC1BE /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		65B8544B2A390925000DC1BE /* CognitoAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CognitoAuthVM.swift; sourceTree = "<group>"; };
 		69C011DCF1152CCCC586BBF0 /* AmplifyModels.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = AmplifyModels.swift; path = amplify/generated/models/AmplifyModels.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				6549A5672A71B04500F684FD /* SettingsView.swift */,
 				6549A5692A71BD8E00F684FD /* SettingsButton.swift */,
 				6549A56D2A730B5400F684FD /* BackButton.swift */,
+				659754E22A79AD1400A5EA18 /* BeginnerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				CCD96679DD436622A0763B2E /* Podcast.swift in Sources */,
 				6549A56E2A730B5400F684FD /* BackButton.swift in Sources */,
 				6549A5662A70794E00F684FD /* AuthenticatorView.swift in Sources */,
+				659754E32A79AD1400A5EA18 /* BeginnerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

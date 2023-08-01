@@ -49,6 +49,10 @@ struct ContentView: View {
                     }
                 }
             }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(8)
+            .shadow(radius: 4)
             Spacer()
         }
     }
