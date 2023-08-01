@@ -29,7 +29,7 @@ struct PlayerView: View {
                         
                         playbackControlButtons(url: url)
                         
-                        PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
+                     
                     }
                     .padding(20)
                     
@@ -75,6 +75,8 @@ struct PlayerView: View {
             PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play") { audioPlayer.togglePlayback(withURL: url) }
             
             PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
+            
+            PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
         }
     }
 }
