@@ -17,6 +17,7 @@ import Authenticator
 struct ContentView: View {
     @StateObject private var vm : PodcastViewModel
     @State private var showSettings: Bool = false
+    @State private var selectedLevel: String? = nil
     
     
     init(dataService: ProductionDataService) {
@@ -40,11 +41,13 @@ struct ContentView: View {
             }
 
             Spacer()
+           
             VStack{
                 
                 ForEach(vm.podcasts, id: \.id) { podcast in
                     NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
                         Text(podcast.title)
+                        Text(podcast.level)
                         
                     }
                 }
@@ -76,6 +79,8 @@ struct DialogView: View {
     
     var body: some View {
         VStack {
+      
+            
             List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
                 let dialogText = dialog[index]
                 Text(dialogText)
@@ -83,7 +88,7 @@ struct DialogView: View {
                     .onTapGesture {
                         tappedIndices.append(index)
                     }
-                
+
                 if tappedIndices.contains(index) {
                     let oddIndex = index + 1
                     if oddIndex < dialog.count {
@@ -94,7 +99,7 @@ struct DialogView: View {
                     }
                 }
             }
-            //PodcastView3()
+            
         }
         
         VStack{
