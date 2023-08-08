@@ -10,7 +10,7 @@ import SwiftUI
 struct PlayButton: View {
     var systemName: String = "play"
     var fontSize: CGFloat = 24
-    var color: Color = .blue
+    var color: Color = .white
     var action: () -> Void
     //function type that returns void
     var body: some View {

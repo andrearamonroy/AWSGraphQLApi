@@ -16,50 +16,54 @@ import Authenticator
 
 struct ContentView: View {
     @StateObject private var vm : PodcastViewModel
-    @State private var showSettings: Bool = false
-    @State private var selectedLevel: String? = nil
     
     
-    init(dataService: ProductionDataService) {
-        _vm = StateObject(wrappedValue: PodcastViewModel(dataService: dataService))
+    init(dataService: ProductionDataService)  {
+        _vm = StateObject(wrappedValue:  PodcastViewModel(dataService: dataService))
     }
     
     var body: some View {
+    
         
-        
-        
-        VStack{
-            NavigationLink {
-                SettingsView()
-            } label: {
-                HStack {
-                    Spacer()
-                    SettingsButton()
-                }
-                .padding()
-
-            }
-
-            Spacer()
-           
+        ScrollView {
             VStack{
-                
-                ForEach(vm.podcasts, id: \.id) { podcast in
-                    NavigationLink(destination: DialogView(dialog: podcast.dialog, audio: podcast.audio)) {
-                        Text(podcast.title)
-                        Text(podcast.level)
-                        
+                NavigationLink {
+                    SettingsView()
+                } label: {
+                    HStack {
+                        Spacer()
+                        SettingsButton()
                     }
+                    .padding()
+                    
+                    
                 }
+                
+                Spacer()
+                
+                VStack {
+                    ForEach(vm.podcasts.sorted(by: { $0.id < $1.id }), id: \.id){podcast in
+                        NavigationLink {
+                            if let episodes = podcast.episodes?.elements {
+                                EpisodesView(episodes: episodes)
+                                
+                            }
+                        } label: {
+                            LevelButton(level: podcast.level)
+                        }
+                        .padding(10)
+
+                    
+                    }
+                    
+                }
+                
+                Spacer()
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .shadow(radius: 4)
-            Spacer()
         }
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
@@ -70,45 +74,28 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct DialogView: View {
-    var dialog: [String]
-    var audio: String
-    //@StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
-    @State private var tappedIndices: [Int] = []
-    
-    
-    var body: some View {
-        VStack {
-      
-            
-            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
-                let dialogText = dialog[index]
-                Text(dialogText)
-                    .foregroundColor(.primary)
-                    .onTapGesture {
-                        tappedIndices.append(index)
-                    }
 
-                if tappedIndices.contains(index) {
-                    let oddIndex = index + 1
-                    if oddIndex < dialog.count {
-                        let oddText = dialog[oddIndex]
-                        Text(oddText)
-                            .foregroundColor(.white)
-                            .listRowBackground(Color.gray)
-                    }
-                }
-            }
-            
-        }
+
+struct LevelButton: View {
+    var level :  String
+    var body: some View {
         
-        VStack{
-            PlayerView(audio: audio)
-        }
+        Text(level) //using var to access a property in a struct
+            .fontWeight(.bold)
+            .font(.title)
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(40)
+            .foregroundColor(Color.white)
+            .padding(7)
+            .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.blue, lineWidth: 5))
         
         
     }
+    
 }
+
+
 
 struct PodcastView: View {
     var body: some View {
@@ -241,56 +228,6 @@ struct PodcastView2: View {
         //                }
         //            }
 
-
-
-
-//struct DialogView: View {
-//    var dialog: [String]
-//    //var audio: String
-//    //var music : String
-//    @StateObject private var audioVM: AudioVM = AudioVM(audioManager: AudioManager())
-//
-//    @State private var tappedIndices: [Int] = []
-//
-//    var body: some View {
-//        VStack {
-//            List(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
-//                let dialogText = dialog[index]
-//                Text(dialogText)
-//                    .foregroundColor(.primary)
-//                    .onTapGesture {
-//                        tappedIndices.append(index)
-//                    }
-//
-//                if tappedIndices.contains(index) {
-//                    let oddIndex = index + 1
-//                    if oddIndex < dialog.count {
-//                        let oddText = dialog[oddIndex]
-//                        Text(oddText)
-//                            .foregroundColor(.white)
-//                            .listRowBackground(Color.gray)
-//                    }
-//                }
-//            }
-//
-//            Button("Play") {
-//                audioVM.loadAudio(audioKey: audio)
-//            }
-//        }
-//        .onDisappear {
-//            audioVM.audioPlayer?.stop()
-//        }
-//
-//    }
-//
-//    func getAudio(){
-//        Amplify.Storage.downloadData(key: "verbeAvoir.mp3") {result in
-//            if case .sucess(let storageResult) = result {
-//                self.music = storageResult.items
-//            }
-//        }
-//    }
-//}
 
 
 

@@ -25,19 +25,31 @@ struct PlayerView: View {
             if let url = audioVM.audioURL {
                 VStack {
                     HStack {
+                      
                         playbackSpeedMenu
+                        Spacer()
+                       
+                        PlayButton(systemName: "gobackward.10") { audioPlayer.seekBackward() }
+                        Spacer()
+
+                        PlayButton(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill", fontSize: 60) { audioPlayer.togglePlayback(withURL: url) }
+                          
+                        Spacer()
                         
-                        playbackControlButtons(url: url)
+                        PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
+                        Spacer()
+                        
+                        PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
+                       
                         
                      
                     }
-                    .padding(20)
-                    
-                    // Slider
-    
-                    
-                    
+                    .padding()
+
+                 
+        
                 }
+                
             } else {
                 Text("Audio URL not available")
             }
@@ -66,22 +78,29 @@ struct PlayerView: View {
         } label: {
             Image(systemName: "slider.horizontal.3")
         }
+        .background(.white)
     }
     
-    private func playbackControlButtons(url: URL) -> some View {
-        HStack {
-            PlayButton(systemName: "gobackward.10") { audioPlayer.seekBackward() }
-
-            PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play", fontSize: 44) { audioPlayer.togglePlayback(withURL: url) }
-            
-            PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
-            
-            PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
-        }
-    }
+//    private func playbackControlButtons(url: URL) -> some View {
+//        HStack(spacing: 30) {
+//
+//            PlayButton(systemName: "gobackward.10") { audioPlayer.seekBackward() }
+//            Spacer()
+//
+//            PlayButton(systemName: audioPlayer.isPlaying ? "pause" : "play", fontSize: 44) { audioPlayer.togglePlayback(withURL: url) }
+//            Spacer()
+//
+//            PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
+//            Spacer()
+//
+//            PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
+//            Spacer()
+//        }
+//    }
 }
 struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
         PlayerView(audio: "vousEtes.mp3")
+            .previewLayout(.sizeThatFits)
     }
 }

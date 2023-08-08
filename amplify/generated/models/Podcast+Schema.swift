@@ -6,10 +6,8 @@ extension Podcast {
   // MARK: - CodingKeys 
    public enum CodingKeys: String, ModelKey {
     case id
-    case title
     case level
-    case audio
-    case dialog
+    case episodes
     case createdAt
     case updatedAt
   }
@@ -32,10 +30,8 @@ extension Podcast {
     
     model.fields(
       .field(podcast.id, is: .required, ofType: .string),
-      .field(podcast.title, is: .required, ofType: .string),
       .field(podcast.level, is: .required, ofType: .string),
-      .field(podcast.audio, is: .required, ofType: .string),
-      .field(podcast.dialog, is: .required, ofType: .embeddedCollection(of: String.self)),
+      .hasMany(podcast.episodes, is: .optional, ofType: Episode.self, associatedWith: Episode.keys.podcastID),
       .field(podcast.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(podcast.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

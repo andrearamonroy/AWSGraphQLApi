@@ -14,12 +14,16 @@ import class Amplify.List
 class ProductionDataService  {
     //singleton
     //static let singleton = ProductionDataService()
+    
+   
 
     func getData() -> AnyPublisher<Result<List<Podcast>, GraphQLResponseError<List<Podcast>>>, any Error> {
         
       Amplify.Publisher.create {
             try await Amplify.API.query(
-                request: GraphQLRequest<Podcast>.list(Podcast.self))
+                request: .getPodcast())
+          
+          //GraphQLRequest<Podcast>.list(Podcast.self)
             
       }
             .receive(on: DispatchQueue.main)
@@ -30,17 +34,18 @@ class ProductionDataService  {
 }
 class PodcastViewModel : ObservableObject {
     @Published var podcasts: [Podcast] = []
+  
     var cancellables = Set<AnyCancellable>() //init a new one
     let dataService: ProductionDataService
     //  private let audioPlayer: AudioPlayerProtocol
     
-    init(dataService: ProductionDataService ){
+    init(dataService: ProductionDataService ) {
         self.dataService = dataService
-        // self.audioPlayer = audioPlayer
         
         loadData()
+        
     }
-    
+
     func loadData(){
         dataService.getData()
             .sink { _ in
@@ -49,7 +54,8 @@ class PodcastViewModel : ObservableObject {
                 switch result {
                 case .success(let podcasts):
                     self?.podcasts.append(contentsOf: podcasts)
-                    
+                    print("success podcasts")
+                
                 case .failure(let error):
                     print("Failed to retrieve podcasts: \(error)")
                 }
@@ -57,49 +63,41 @@ class PodcastViewModel : ObservableObject {
             .store(in: &cancellables)
         
     }
+  
 }
+extension GraphQLRequest {
+    static func getPodcast() -> GraphQLRequest<List<Podcast>> {
+        let document = """
+        query MyQuery {
+          listPodcasts {
+            items {
+              id
+              level
+              episodes {
+                items {
+                  id
+                  podcastID
+                  title
+                  dialog
+                  audio
+                }
+              }
+            }
+          }
+        }
+        """
+        return GraphQLRequest<List<Podcast>>(
+            document: document,
+            responseType: List<Podcast>.self,
+            decodePath: "listPodcasts"
+        )
+    }
+}
+ 
+
 
     
     
-    
-    //
-    //class PodcastViewModel : ObservableObject {
-    //    @Published var podcasts: [Podcast] = [] //holds models
-    //    var hasFetchedPodcasts = false
-    //
-    //
-    //    func getPodcast() async {
-    //        // or hasFetchedPodcasts == false
-    //        guard !hasFetchedPodcasts else {
-    //                return //if true return (exit early of the func)
-    //            }
-    //        //if false execute do block
-    //
-    //        do {
-    //            let result = try await Amplify.API.query(
-    //                request: GraphQLRequest<Podcast>.list(Podcast.self)
-    //            )
-    //
-    //            switch result {
-    //            case .success(let podcast):
-    //                await MainActor.run(body: {
-    //
-    //                    self.podcasts.append(contentsOf: podcast)
-    //                    self.hasFetchedPodcasts = true
-    //                })
-    //
-    //                print("Successfully retrieved todo: \(podcast)")
-    //
-    //            case .failure(let error):
-    //                print("Got failed result with \(error.errorDescription)")
-    //            }
-    //        } catch let error as APIError {
-    //            print("Failed to query podcast: ", error)
-    //        } catch {
-    //            print("Unexpected error: \(error)")
-    //        }
-    //    }
-    //
-    //}
+  
     
 

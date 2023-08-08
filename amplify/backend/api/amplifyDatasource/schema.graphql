@@ -1,9 +1,15 @@
 type Podcast @model
 @auth(rules: [{ allow: public}] ) {
   id: ID!
-  title: String!
   level: String! 
+  episodes : [Episode] @hasMany(indexName: "byPodcast", fields: ["id"])
+}
+
+type Episode @model
+@auth(rules: [{ allow: public}] ) {
+  id: ID!
+  podcastID: ID! @index(name: "byPodcast", sortKeyFields: ["title"])
+  title: String!
   audio: String!
   dialog: [String!]!
 }
-
