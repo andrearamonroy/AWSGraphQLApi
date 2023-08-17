@@ -6,6 +6,7 @@
 ////
 
 import SwiftUI
+import AVFoundation
 
 struct PlayerView: View {
     var audio: String
@@ -14,6 +15,10 @@ struct PlayerView: View {
     @State private var value: Double = 0.0
     @State private var isEditing = false
     
+    @State private var showAnimationView : Bool = false
+    
+    
+    var title : String
     
 //    let timer = Timer
 //        .publish(every: 0.5, on: .main, in: .common)
@@ -24,7 +29,7 @@ struct PlayerView: View {
         VStack {
             if let url = audioVM.audioURL {
                 VStack {
-                    HStack {
+                    HStack (spacing: 20){
                       
                         playbackSpeedMenu
                         Spacer()
@@ -34,26 +39,38 @@ struct PlayerView: View {
 
                         PlayButton(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill", fontSize: 60) { audioPlayer.togglePlayback(withURL: url) }
                           
-                        Spacer()
+                       Spacer()
                         
                         PlayButton(systemName: "goforward.10") { audioPlayer.seekForward() }
-                        Spacer()
+                       Spacer()
                         
                         PlayButton(systemName: "stop.fill") { audioPlayer.stopAudio() }
-                       
-                        
-                     
-                    }
-                    .padding()
-
-                 
-        
+                        }
+    
+                    
+                    Slider(value: $audioPlayer.playbackProgress, in: 0.0...1.0)
+                        .onChange(of: audioPlayer.playbackProgress) { newValue in
+                            if newValue >= 1.0 {
+                                audioPlayer.seekToBeginningAndPause()
+                                showAnimationView = true
+                            } else if newValue <= 0.0 {
+                                audioPlayer.seekToBeginningAndPause()
+                            }
+                        }
+                        .padding()
+                        .tint(.white)
                 }
-                
+              
             } else {
                 Text("Audio URL not available")
             }
+                
         }
+       
+        .fullScreenCover(isPresented:  $showAnimationView, content: {
+            AnimationView(title: title)
+        })
+        
         .onAppear {
             audioVM.loadAudio(audioKey: audio)
         
@@ -100,7 +117,7 @@ struct PlayerView: View {
 }
 struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerView(audio: "vousEtes.mp3")
+        PlayerView(audio: "vousEtes.mp3", title: "Episode 1")
             .previewLayout(.sizeThatFits)
     }
 }

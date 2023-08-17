@@ -19,6 +19,7 @@ import Authenticator
 struct FrenchAppApp: App {
     //private let dataService = ProductionDataService()
     //  private let audioPlayer = AudioPlayer()
+    @State private var showLaunchView: Bool = true
     
     init(){
         configureAmplify()
@@ -27,9 +28,18 @@ struct FrenchAppApp: App {
     var body: some Scene {
         
         WindowGroup {
-            NavigationView{
-                AuthenticatorView()
-                    .navigationBarHidden(true)
+            ZStack {
+                NavigationView{
+                    AuthenticatorView()
+                        .navigationBarHidden(true)
+                }
+                ZStack {
+                    if showLaunchView {
+                        LaunchView(showLaunchView: $showLaunchView)
+                            .transition(.move(edge: .leading))
+                    }
+                }
+                .zIndex(2.0)
             }
         }
     }

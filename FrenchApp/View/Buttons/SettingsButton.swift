@@ -18,7 +18,7 @@ struct SettingsButton: View {
                 Circle()
                     .foregroundColor(.white)
             )
-            .shadow(color: Color.cyan.opacity(0.25),
+            .shadow(color: Color.blue,
                     radius: 10, x: 0, y: 0)
             .padding()
         

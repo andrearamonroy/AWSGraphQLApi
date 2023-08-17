@@ -20,19 +20,23 @@ struct DialogsView: View {
             LinearGradient(gradient: Gradient(colors: [Color.white, Color.blue]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                Text(title)
-                    .font(.custom(
-                            "AmericanTypewriter",
+               // HStack{
+                    Text(title)
+                        .font(.custom(
+                            "ArialRoundedMTBold",
                             fixedSize: 36))
-                    .padding()
+                        .foregroundColor(.black)
+                        .padding(5)
+               
                 ScrollView {
                 ForEach(dialog.indices.filter { $0 % 2 == 0 || $0 == 0 }, id: \.self) { index in
                     let dialogText = dialog[index]
                     Text(dialogText)
+                        .font(.callout)
                         .foregroundColor(.black)
-                        .padding()
+                        .padding(10)
                         .background(.white)
-                        .cornerRadius(8)
+                        .cornerRadius(4)
                         .shadow(radius: 4)
                     
                         .onTapGesture {
@@ -44,17 +48,18 @@ struct DialogsView: View {
                         if oddIndex < dialog.count {
                             let oddText = dialog[oddIndex]
                             Text(oddText)
+                                .font(.callout)
                                 .foregroundColor(.black)
-                                .padding()
-                                .background(Color(hue: 0.606, saturation: 0.362, brightness: 0.916))                                .cornerRadius(8)
+                                .padding(10)
+                                .background(Color(hue: 0.606, saturation: 0.362, brightness: 0.916))       .cornerRadius(4)
                                 .shadow(radius: 4)
                         }
                     }
                 }
             }
-                PlayerView(audio: audio)
-                    .padding(20)
-                
+            
+                PlayerView(audio: audio, title: title)
+
             }
             .padding()
         }
