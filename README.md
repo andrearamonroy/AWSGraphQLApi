@@ -14,7 +14,7 @@ The Slow French app provides the user with three levels; beginner, intermediate,
 
 <img width="1848" alt="slowFrench" src="https://github.com/andrearamonroy/AWSGraphQLApi/assets/54419381/9cf2e10b-467f-4c74-bcf0-62839d9eb9f9">
 
-## Development Details:
+## Backend Development:
 The backend is fully hosted on AWS using Swift Amplify. 
 To make only one network request it implements GraphQL API.
 The audio files are saved in an S3 bucket and the object key is saved in one of two DynamoDB tables (one table with the Podcast info, and one with the Episode info). 
