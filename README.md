@@ -15,11 +15,11 @@ The Slow French app provides the user with three levels; beginner, intermediate,
 <img width="1848" alt="slowFrench" src="https://github.com/andrearamonroy/AWSGraphQLApi/assets/54419381/9cf2e10b-467f-4c74-bcf0-62839d9eb9f9">
 
 ## Development Details:
-The backend is fully hosted on AWS using Swift Amplify to make the network call. 
-It implements GraphQL API to make only one network request. 
+The backend is fully hosted on AWS using Swift Amplify. 
+To make only one network request it implements GraphQL API.
 The audio files are saved in an S3 bucket and the object key is saved in one of two DynamoDB tables (one table with the Podcast info, and one with the Episode info). 
 
 ## Architecture:
 It implements the Combine Framework and dependecy injection.
 It benefits of a network manager and the MVVM architecture. 
-Also, the audio files are persisted in order to not download the audio files every time the view is re-drawn.
+Also, the audio files are persisted in order to avoid downloading the audio files every time the view is re-drawn.
