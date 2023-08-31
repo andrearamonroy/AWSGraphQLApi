@@ -9,7 +9,7 @@
 - Implements the MVVM architecture.
 - Backend: AWS S3, GraphQL API, DynamoDB, Amplify.
 
-## General Ingo
+## General Info
 The Slow French app provides the user with three levels; beginner, intermediate, and advanced French podcasts. Each podcast has a French transcript and an English translation. Also, it allows the user to select the speed of the audio between slow, medium, and fast.
 
 <img width="1848" alt="slowFrench" src="https://github.com/andrearamonroy/AWSGraphQLApi/assets/54419381/9cf2e10b-467f-4c74-bcf0-62839d9eb9f9">
